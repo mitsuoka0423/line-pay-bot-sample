@@ -1,4 +1,4 @@
-# LINE Pay Sample
+# LINE Pay Bot Sample
 
 ## インストール
 
