@@ -48,4 +48,4 @@ server is listening... https://xxxxxxxxxxx.ngrok.io
 
 ## 動作確認
 
-LINE Botに`チョコレート`と入力・送信してください。
+LINE Botに`チョコレート`と送信してください。
