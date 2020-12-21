@@ -34,7 +34,7 @@ const client = new line.Client(config);
 
 // ローカル（自分のPC）でサーバーを公開するときのポート番号です
 app.listen(process.env.PORT || 5000, () => {
-    console.log(`server is listening... http://localhost:${process.env.PORT || 5000}`);
+    console.log(`server is listening... ${process.env.NGROK_URL}`);
 });
 
 // publicフォルダのファイルを公開する
@@ -71,7 +71,7 @@ async function handleEvent(event) {
                 }
             ],
             redirectUrls: {
-                confirmUrl: 'http://localhost:5000/pay/confirm',
+                confirmUrl: `${process.env.NGROK_URL}/pay/confirm`,
             }
         };
         console.log('以下のオプションで決済予約を行います。');

@@ -14,17 +14,20 @@ npm i
 | -- | -- | -- |
 | LINE_PAY_CHANNEL_ID | LINE PayのチャネルID | LINE Pay管理画面から取得可能 |
 | LINE_PAY_CHANNEL_SECRET | LINE Payのチャネルシークレット | LINE Pay管理画面から取得可能 |
-| LINE_PAY_CONFIRM_URL | http://localhost:5000/pay/confirm | herokuなどにデプロイする場合は変更する |
-| LINE_PAY_HOSTNAME | (不要) | プロキシを使用する場合は入力する |
 | LINE_BOT_CHANNEL_SECRET | LINE BotのチャネルID | LINE Developerコンソールから取得可能 |
 | LINE_BOT_ACCESS_TOKEN | LINE Botのアクセストークン | LINE Developerコンソールから取得可能 |
+| NGROK_URL | https://xxxxxxxxxxxxx.ngrok.io | ngrokのトンネリングURL |
 
 ## 実行
 
 ```bash
-node web.js
-
-server is listening to 5000...
+npx ngrok http 5000
 ```
 
-サーバー起動後、http://localhost:5000/ からアクセスできる。
+```bash
+node web.js
+
+server is listening... https://xxxxxxxxxxx.ngrok.io
+```
+
+サーバー起動後、http://xxxxxxxxxxx.ngrok.io/ からアクセスできる。
