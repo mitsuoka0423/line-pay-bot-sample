@@ -1,5 +1,11 @@
 # LINE Pay Bot Sample
 
+LINE Bot + LINE Pay API v3のサンプルアプリです。
+
+## 動作イメージ
+
+[![Image from Gyazo](https://i.gyazo.com/5c053b684ff6a6fe2fbfab799a8d2e65.gif)](https://gyazo.com/5c053b684ff6a6fe2fbfab799a8d2e65)
+
 ## インストール
 
 ```bash
@@ -24,10 +30,19 @@ npm i
 npx ngrok http 5000
 ```
 
+ngrokのURLが発行されるので、`.env`の`NGROK_URL`を更新する。
+
 ```bash
 node web.js
 
 server is listening... https://xxxxxxxxxxx.ngrok.io
 ```
 
-サーバー起動後、http://xxxxxxxxxxx.ngrok.io/ からアクセスできる。
+## Messaging API Webhook URLの設定
+
+[LINE Developerコンソール](https://developers.line.biz/ja/)から、対象のLINE BotのWebhook URLを更新する。
+
+[![Image from Gyazo](https://i.gyazo.com/470de4ab810d1d3da0b84fc5ad1c6b46.png)](https://gyazo.com/470de4ab810d1d3da0b84fc5ad1c6b46)
+
+> 末尾に`/webhook`が必要です。
+
