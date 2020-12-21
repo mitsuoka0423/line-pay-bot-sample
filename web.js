@@ -83,6 +83,7 @@ async function handleEvent(event) {
             console.log('response', response);
     
             // 決済確認処理に必要な情報を保存しておく。
+            order.userId = event.source.userId;
             cache.put(order.orderId, order);
     
             const message = {
@@ -96,7 +97,7 @@ async function handleEvent(event) {
                     ]
                 }
             }
-            client.replyMessage(event.replyToken, message);
+            await client.replyMessage(event.replyToken, message);
     
             console.log('決済予約が完了しました。');
 
@@ -157,6 +158,12 @@ app.use('/pay/confirm', async (req, res) => {
     try {
         // LINE Pay APIを使って、決済確認を行う。
         await pay.confirm(option, req.query.transactionId)
+        
+        await client.pushMessage(order.userId, {
+            type: 'text',
+            text: '決済が完了しました。'
+        });
+
         res.send('決済が完了しました。');
 
         console.log('決済が完了しました。');
