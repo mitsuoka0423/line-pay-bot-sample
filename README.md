@@ -4,7 +4,7 @@ LINE Bot + LINE Pay API v3のサンプルアプリです。
 
 ## 動作イメージ
 
-[![Image from Gyazo](https://i.gyazo.com/5c053b684ff6a6fe2fbfab799a8d2e65.gif)](https://gyazo.com/5c053b684ff6a6fe2fbfab799a8d2e65)
+<a href="https://gyazo.com/5c053b684ff6a6fe2fbfab799a8d2e65"><img src="https://i.gyazo.com/5c053b684ff6a6fe2fbfab799a8d2e65.gif" alt="Image from Gyazo" width="400"/></a>
 
 ## インストール
 
