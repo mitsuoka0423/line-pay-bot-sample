@@ -46,3 +46,6 @@ server is listening... https://xxxxxxxxxxx.ngrok.io
 
 > 末尾に`/webhook`が必要です。
 
+## 動作確認
+
+LINE Botに`チョコレート`と入力・送信してください。
