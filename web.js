@@ -10,11 +10,13 @@ require('dotenv').config();
 
 // パッケージを使用します
 const { v4: uuidv4 } = require('uuid');
-const cache = require('memory-cache');
 const LinePay = require('line-pay-v3');
 const line = require('@line/bot-sdk');
 const express = require("express");
 const app = express();
+
+// 注文のデータを一時的に保管します
+const orderData = {};
 
 // line-pay-v3を使用する準備
 const pay = new LinePay({
@@ -76,16 +78,16 @@ async function handleEvent(event) {
         };
         console.log('以下のオプションで決済予約を行います。');
         console.log('order', order);
-    
+
         try {
             // LINE Pay APIを使って、決済予約を行う。
             const response = await pay.request(order);
             console.log('response', response);
-    
+
             // 決済確認処理に必要な情報を保存しておく。
             order.userId = event.source.userId;
-            cache.put(order.orderId, order);
-    
+            orderData[order.orderId] = order;
+
             const message = {
                 type: "template",
                 altText: `チョコレートを購入するには下記のボタンで決済に進んでください`,
@@ -93,12 +95,12 @@ async function handleEvent(event) {
                     type: "buttons",
                     text: `チョコレートを購入するには下記のボタンで決済に進んでください`,
                     actions: [
-                        {type: "uri", label: "LINE Payで決済", uri: response.info.paymentUrl.web},
+                        { type: "uri", label: "LINE Payで決済", uri: response.info.paymentUrl.web },
                     ]
                 }
             }
             await client.replyMessage(event.replyToken, message);
-    
+
             console.log('決済予約が完了しました。');
 
             return;
@@ -123,9 +125,9 @@ app.post('/webhook', line.middleware(config), (req, res) => {
     // 空っぽの場合、検証ボタンをクリックしたときに飛んできた"接続確認"用
     // 削除しても問題ありません
     if (req.body.events.length == 0) {
-      res.send('Hello LINE BOT! (HTTP POST)'); // LINEサーバーに返答します
-      console.log('検証イベントを受信しました！'); // ターミナルに表示します
-      return; // これより下は実行されません
+        res.send('Hello LINE BOT! (HTTP POST)'); // LINEサーバーに返答します
+        console.log('検証イベントを受信しました！'); // ターミナルに表示します
+        return; // これより下は実行されません
     }
 
     // あらかじめ宣言しておいた "handleEvent" 関数にWebhookの中身を渡して処理してもらい、
@@ -142,7 +144,7 @@ app.use('/pay/confirm', async (req, res) => {
     if (!orderId) {
         throw new Error('Order ID is not found');
     }
-    const order = cache.get(req.query.orderId);
+    const order = orderData[req.query.orderId];
     if (!order) {
         throw new Error('Order is not found');
     }
@@ -158,7 +160,7 @@ app.use('/pay/confirm', async (req, res) => {
     try {
         // LINE Pay APIを使って、決済確認を行う。
         await pay.confirm(option, req.query.transactionId)
-        
+
         await client.pushMessage(order.userId, {
             type: 'text',
             text: '決済が完了しました。'
