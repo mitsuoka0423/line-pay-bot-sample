@@ -34,11 +34,6 @@ const config = {
 // LINE SDKを初期化します
 const client = new line.Client(config);
 
-// ローカル（自分のPC）でサーバーを公開するときのポート番号です
-app.listen(process.env.PORT || 5000, () => {
-    console.log(`server is listening... ${process.env.NGROK_URL}`);
-});
-
 // publicフォルダのファイルを公開する
 app.use(express.static(__dirname + "/public"));
 
@@ -173,4 +168,9 @@ app.use('/pay/confirm', async (req, res) => {
         console.log('決済確認処理でエラーが発生しました。');
         console.log(e);
     };
+});
+
+// ローカル（自分のPC）でサーバーを公開するときのポート番号です
+app.listen(process.env.PORT || 3000, () => {
+    console.log(`server is listening... ${process.env.NGROK_URL}`);
 });
