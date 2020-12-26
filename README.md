@@ -27,7 +27,7 @@ npm i
 ## 実行
 
 ```bash
-npx ngrok http 5000
+npx ngrok http 3000
 ```
 
 ngrokのURLが発行されるので、`.env`の`NGROK_URL`を更新する。
